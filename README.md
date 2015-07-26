@@ -25,16 +25,17 @@ Scan for translatable text in a Glade file
 
     xgettext --sort-output --keyword=translatable -o po/sampleapp.pot data/ui.glade
 
-### Example, for French, copy pot file to fr/sampleapp.po
-* Set Content-type with "Content-Type: text/plain; charset=UTF-8\n"
+For Example, for French, copy pot file to fr/sampleapp.po
 
-*Create binary file with `msgfmt`
+Set Content-type with "Content-Type: text/plain; charset=UTF-8\n"
+
+Create binary file with `msgfmt`
 
     msgfmt sampleapp.po -o sampleapp.mo
 
-*Testing localization
+Testing localization
 
-List installed locals with locals 
+List installed locales with the `locale` command 
 
     locale -a
 
