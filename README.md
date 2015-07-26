@@ -7,7 +7,7 @@
 
 ##Base CMake usage
 
-*Build and install
+* Build and install
 
     cmake . && make && sudo make install
 
