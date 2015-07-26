@@ -1,21 +1,21 @@
-    #include "app.h"
+#include "app.h"
     
-    int
-    main (int argc, char *argv[])
-    {
-        App *app;
+int
+main (int argc, char *argv[])
+{
+  App *app;
     
-        app = (App *) g_new (App, 1);
+  app = (App *) g_new (App, 1);
     
-        gtk_init (&argc, &argv);
+  gtk_init (&argc, &argv);
     
-        app_init (app);
+  app_init (app);
     
-        GET_UI_ELEMENT (GtkWidget, window1);
+  GET_UI_ELEMENT (GtkWidget, window1);
     
-        gtk_widget_show_all (window1);
+  gtk_widget_show_all (window1);
     
-        gtk_main ();
+  gtk_main ();
     
-        return 0;
-    }
+  return 0;
+}
