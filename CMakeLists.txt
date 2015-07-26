@@ -10,14 +10,12 @@ cmake_minimum_required(VERSION 2.6)
 include(GNUInstallDirs)
 
 ##directories where to install files.
-#These path are used in with the install instruction which only supports
-#relative path
 set(DATADIR ${CMAKE_INSTALL_DATADIR}/data)
 set(LOCALDIR ${CMAKE_INSTALL_LOCALEDIR})
 set(SCHEMADIR ${CMAKE_INSTALL_DATADIR}/glib-2.0/schemas)
 set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/data)
 
-#These path are passed onto config.h.in to be used a preprocessor definitions
+#These path are passed onto config.h.in to be used preprocessor definitions
 set(DATADIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/data)
 set(LOCALDIR_FULL ${CMAKE_INSTALL_FULL_LOCALEDIR})
 set(PIXMAPDIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/data)
