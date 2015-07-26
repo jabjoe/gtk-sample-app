@@ -116,12 +116,19 @@ install(FILES data/ui.glade DESTINATION ${DATADIR})
 
 # Install locales
 ##Français
-install(FILES
-  po/fr/${PROJECT_NAME}.mo
-  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
+#install(FILES
+#  po/fr/${PROJECT_NAME}.mo
+#  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
-# Install pixmaps
-install(FILES data/${PROJECT_NAME}.png DESTINATION ${PIXMAPDIR})
+# Install icon
+install(
+  FILES data/${PROJECT_NAME}.png
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+
+# Install desktop file
+install(
+  FILES com-gitub-gtk-sample-app.desktop
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 
 # Install programs 
 ## Set the output binary full path name variable
