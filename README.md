@@ -7,21 +7,21 @@
 
 ##Base CMake usage
 
-* Build and install
+Build and install
 
     cmake . && make && sudo make install
 
-* Build and install under MinGW
+Build and install under MinGW
 
     cmake -G "MSYS Makefiles" . && make && make install
 
-* Create an Windows installer with NSIS
+Create an Windows installer with NSIS
 
     cmake -DNSIS=ON -G "MSYS Makefiles" . && make package
 
 ## Localization
 
-*Scan for translatable text in a Glade file
+Scan for translatable text in a Glade file
 
     xgettext --sort-output --keyword=translatable -o po/sampleapp.pot ui.glade
 
