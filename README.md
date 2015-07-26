@@ -5,6 +5,20 @@
 * Localization
 * Glade UI file with common callbacks (quit/about)
 
+##Base CMake usage
+
+*Build and install
+
+    cmake . && make && sudo make install
+
+* Build and install under MinGW
+
+    cmake -G "MSYS Makefiles" . && make && make install
+
+* Create an Windows installer with NSIS
+
+    cmake -DNSIS=ON -G "MSYS Makefiles" . && make package
+
 ## Localization
 
 *Scan for translatable text in a Glade file
