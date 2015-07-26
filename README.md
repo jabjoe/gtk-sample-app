@@ -23,9 +23,9 @@ Create an Windows installer with NSIS
 
 Scan for translatable text in a Glade file
 
-    xgettext --sort-output --keyword=translatable -o po/sampleapp.pot ui.glade
+    xgettext --sort-output --keyword=translatable -o po/sampleapp.pot data/ui.glade
 
-* Example, for French, copy pot file to fr/sampleapp.po
+### Example, for French, copy pot file to fr/sampleapp.po
 * Set Content-type with "Content-Type: text/plain; charset=UTF-8\n"
 
 *Create binary file with `msgfmt`
