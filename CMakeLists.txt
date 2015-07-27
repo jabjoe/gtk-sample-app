@@ -10,15 +10,15 @@ cmake_minimum_required(VERSION 2.6)
 include(GNUInstallDirs)
 
 ##directories where to install files.
-set(DATADIR ${CMAKE_INSTALL_DATADIR}/data)
+set(DATADIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 set(LOCALDIR ${CMAKE_INSTALL_LOCALEDIR})
 set(SCHEMADIR ${CMAKE_INSTALL_DATADIR}/glib-2.0/schemas)
-set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/data)
+set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 #These path are passed onto config.h.in to be used preprocessor definitions
-set(DATADIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/data)
+set(DATADIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_NAME})
 set(LOCALDIR_FULL ${CMAKE_INSTALL_FULL_LOCALEDIR})
-set(PIXMAPDIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/data)
+set(PIXMAPDIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_NAME})
 
 #generate config.h from config.h.in
 configure_file(config.h.in config.h)
@@ -41,7 +41,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
 #if we want to create a NSIS script
 if(NSIS)
-  set(CPACK_PACKAGE_EXECUTABLES SAMPLEAPP ${PROJECT_NAME}.exe)
+  set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
   set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
   set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
   include (NSIS.cmake)
@@ -120,10 +120,13 @@ install(FILES data/ui.glade DESTINATION ${DATADIR})
 #  po/fr/${PROJECT_NAME}.mo
 #  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
-# Install icon
+# Install icons
 install(
   FILES data/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+install(
+  FILES data/${PROJECT_NAME}.png
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 # Install desktop file
 install(
