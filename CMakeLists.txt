@@ -116,9 +116,9 @@ install(FILES data/ui.glade DESTINATION ${DATADIR})
 
 # Install locales
 ##Français
-#install(FILES
-#  po/fr/${PROJECT_NAME}.mo
-#  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
+install(FILES
+  po/fr/${PROJECT_NAME}.mo
+  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
 # Install icons
 install(
