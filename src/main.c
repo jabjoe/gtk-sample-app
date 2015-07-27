@@ -18,11 +18,6 @@ int main( int argc, char **argv )
   //get main window
   GET_OBJECT (GtkWidget, window);
   
-  //set icon
-  GError *error = NULL;
-  GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(DATADIR"/"PROJECT_NAME".png", &error);   
-  gtk_window_set_icon(GTK_WINDOW(window), pixbuf);
-  
   //display
   gtk_widget_show_all (window);
   
