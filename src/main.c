@@ -20,7 +20,7 @@ int main( int argc, char **argv )
   
   //set icon
   GError *error = NULL;
-  GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(PIXMAPDIR"/"PROJECT_NAME".png", &error);   
+  GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(DATADIR"/"PROJECT_NAME".png", &error);   
   gtk_window_set_icon(GTK_WINDOW(window), pixbuf);
   
   //display
