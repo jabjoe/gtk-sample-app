@@ -6,5 +6,11 @@ cmake_install.cmake
 install_manifest.txt
 bin
 config.h
-glib-2.0/schemas/gschemas.compiled
+gschemas.compiled
 *~
+CPackConfig.cmake
+CPackSourceConfig.cmake
+_CPack_Packages/
+*-win32.exe
+*.dll.a
+resources/NSIS/NSIS.definitions.nsh
