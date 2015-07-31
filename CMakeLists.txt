@@ -1,7 +1,5 @@
-set(PROJECT_NAME sampleapp)  #change sampleapp to your project name
-
 # Set the name and the supported language of the project
-project(${PROJECT_NAME} C)
+project(sampleapp C)
 
 # Set the minimum version of cmake required to build this project
 cmake_minimum_required(VERSION 2.6)
