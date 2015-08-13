@@ -5,7 +5,7 @@ project(sampleapp C)
 cmake_minimum_required(VERSION 2.6)
 
 #source directories
-set (SOURCE_SHARE "share/sampleapp")
+set (SOURCE_SHARE "share")
 
 #install directories variables
 include(GNUInstallDirs)
@@ -18,7 +18,7 @@ set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 #These path are passed onto config.h.in to be used as preprocessor definitions
 if(MINGW)
-	set(SHARE_DIR "../share")
+	set(SHARE_DIR "../"{$SOURCE_SHARE}/{$PROJECT_NAME})
 	set(LOCALE_DIR ${SHARE_DIR}/locale)
 else(MINGW)
 	set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
@@ -122,7 +122,7 @@ compile_schemas(${LOCAL_SCHEMADIR})
 
 ## INSTALL
 # Install UI definitions files
-install(FILES ${SOURCE_SHARE}/ui.glade DESTINATION ${DATADIR})
+install(FILES ${SOURCE_SHARE}/${PROJECT_NAME}/ui.glade DESTINATION ${DATADIR})
 
 # Install locales
 ##Français
@@ -132,10 +132,10 @@ install(FILES
 
 # Install icons
 install(
-  FILES ${SOURCE_SHARE}/${PROJECT_NAME}.png
+  FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
 install(
-  FILES ${SOURCE_SHARE}/${PROJECT_NAME}.png
+  FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 # Install desktop file
