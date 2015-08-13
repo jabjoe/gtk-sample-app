@@ -1,6 +1,5 @@
 /* config.h, generated from config.h.in by CMake ${CMAKE_VERSION} */
 
 #define PROJECT_NAME "${PROJECT_NAME}"
-#define DATADIR      "${DATADIR_FULL}"
-#define PIXMAPDIR    "${PIXMAPDIR_FULL}"
-#define LOCALDIR     "${LOCALDIR_FULL}"
+#define SHARE_DIR    "${SHARE_DIR}"
+#define LOCALE_DIR   "${LOCALE_DIR}"

@@ -4,6 +4,9 @@ project(sampleapp C)
 # Set the minimum version of cmake required to build this project
 cmake_minimum_required(VERSION 2.6)
 
+#source directories
+set (SOURCE_SHARE "/share/sampleapp")
+
 #install directories variables
 include(GNUInstallDirs)
 
@@ -13,10 +16,14 @@ set(LOCALDIR ${CMAKE_INSTALL_LOCALEDIR})
 set(SCHEMADIR ${CMAKE_INSTALL_DATADIR}/glib-2.0/schemas)
 set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
-#These path are passed onto config.h.in to be used preprocessor definitions
-set(DATADIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_NAME})
-set(LOCALDIR_FULL ${CMAKE_INSTALL_FULL_LOCALEDIR})
-set(PIXMAPDIR_FULL ${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_NAME})
+#These path are passed onto config.h.in to be used as preprocessor definitions
+if(MINGW)
+	set(SHARE_DIR "../share")
+	set(LOCALE_DIR ${SHARE_DIR}/locale)
+else(MINGW)
+	set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
+	set(LOCALE_DIR ${CMAKE_INSTALL_FULL_LOCALEDIR})
+endif(MINGW)
 
 #generate config.h from config.h.in
 configure_file(config.h.in config.h)
@@ -115,7 +122,7 @@ compile_schemas(${LOCAL_SCHEMADIR})
 
 ## INSTALL
 # Install UI definitions files
-install(FILES data/ui.glade DESTINATION ${DATADIR})
+install(FILES ${SOURCE_SHARE}/ui.glade DESTINATION ${DATADIR})
 
 # Install locales
 ##Français
@@ -125,10 +132,10 @@ install(FILES
 
 # Install icons
 install(
-  FILES data/${PROJECT_NAME}.png
+  FILES ${SOURCE_SHARE}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
 install(
-  FILES data/${PROJECT_NAME}.png
+  FILES ${SOURCE_SHARE}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 # Install desktop file
