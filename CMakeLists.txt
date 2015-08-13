@@ -52,6 +52,9 @@ if(NSIS)
   INSTALL(
     FILES
     ${GTK_BIN}/libatk-1.0-0.dll
+	${GTK_BIN}/libfontconfig-1.dll
+	${GTK_BIN}/libgdk-3-0.dll
+	${GTK_BIN}/liblzma-5.dll
     ${GTK_BIN}/libcairo-2.dll
     ${GTK_BIN}/libcairo-gobject-2.dll
     ${GTK_BIN}/libffi-6.dll
@@ -60,12 +63,14 @@ if(NSIS)
     ${GTK_BIN}/libgio-2.0-0.dll 
     ${GTK_BIN}/libglib-2.0-0.dll
     ${GTK_BIN}/libgmodule-2.0-0.dll 
-    ${GTK_BIN}/libgobject-2.0-0.dll 
+    ${GTK_BIN}/libgobject-2.0-0.dll
     ${GTK_BIN}/libgtk-3-0.dll
     ${GTK_BIN}/libiconv-2.dll 
     ${GTK_BIN}/libintl-8.dll 
+    ${GTK_BIN}/libpango-1.0-0.dll
     ${GTK_BIN}/libpango-1.0-0.dll 
     ${GTK_BIN}/libpangocairo-1.0-0.dll
+    ${GTK_BIN}/libpangoft2-1.0-0.dll
     ${GTK_BIN}/libpangowin32-1.0-0.dll
     ${GTK_BIN}/libpixman-1-0.dll
     ${GTK_BIN}/libpng15-15.dll
