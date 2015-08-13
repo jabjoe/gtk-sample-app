@@ -5,7 +5,7 @@ project(sampleapp C)
 cmake_minimum_required(VERSION 2.6)
 
 #source directories
-set (SOURCE_SHARE "/share/sampleapp")
+set (SOURCE_SHARE "share/sampleapp")
 
 #install directories variables
 include(GNUInstallDirs)
