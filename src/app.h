@@ -15,11 +15,7 @@
 
 typedef struct app_
 {
-  GtkBuilder *definitions;
-    
-  GdkRGBA *active_color;
-  GdkRGBA *inactive_color;
-    
+  GtkBuilder *definitions;    
 } App;
     
 void app_init (App * );
