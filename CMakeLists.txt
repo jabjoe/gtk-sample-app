@@ -10,16 +10,18 @@ set (SOURCE_SHARE "share")
 #install directories variables
 include(GNUInstallDirs)
 
-##directories where to install files.
-set(DATADIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
-set(LOCALDIR ${CMAKE_INSTALL_LOCALEDIR})
-set(SCHEMADIR ${CMAKE_INSTALL_DATADIR}/glib-2.0/schemas)
-set(PIXMAPDIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+##directories where to find/install files.
+#These path are used in with the install instruction which only supports
+#relative path
+set(SHAREDIR       ${CMAKE_INSTALL_DATADIR})
+set(LOCALDIR       ${CMAKE_INSTALL_LOCALEDIR})
+set(GLIB_SCHEMADIR "glib-2.0/schemas")
+set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 
 #These path are passed onto config.h.in to be used as preprocessor definitions
 if(MINGW)
-	set(SHARE_DIR "../"{$SOURCE_SHARE}/{$PROJECT_NAME})
-	set(LOCALE_DIR ${SHARE_DIR}/locale)
+	set(SHARE_DIR "../share")
+  set(LOCALE_DIR ${SHARE_DIR}/${PROJECT_NAME}/locale)
 else(MINGW)
 	set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
 	set(LOCALE_DIR ${CMAKE_INSTALL_FULL_LOCALEDIR})
@@ -44,6 +46,15 @@ link_directories(${GTK3_LIBRARY_DIRS})
 #compiled binary output directory
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
+#set the pkg-config variable
+set(PKG_CONFIG_EXECUTABLE pkg-config)
+
+#find the glib prefix directory with pkg-config 
+execute_process (
+COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable prefix
+OUTPUT_VARIABLE GLIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 #if we want to create a NSIS script
 if(NSIS)
   set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
@@ -51,8 +62,8 @@ if(NSIS)
   set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
   include (NSIS.cmake)
 
-  #install the gtk lib runtime in the binary directory
-  set (GTK_BIN C:/gtk/bin)   #TODO set the GTK_BIN variable dynamically 
+  #install the Gtk DLLs from the Gtk's bin directory 
+  set (GTK_BIN ${GLIB_PREFIX}/bin)
   
   #these are all the required dll listed in the GTK documentation
   #see http://www.gtk.org/download/win32_contentlist.php
@@ -110,27 +121,56 @@ target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 
+#Settings
 include(GSettings.cmake)
-set(LOCAL_SCHEMADIR glib-2.0/schemas)
-
-#under windows point to a directory with specifique options and org files
-if(${WIN32})
-  set(LOCAL_SCHEMADIR ${LOCAL_SCHEMADIR}/windows)
+if(MINGW)
+  #under windows point to a directory with specific options and org files
+  compile_schemas(${SCHEMADIR}/windows ${SCHEMADIR})
+  
+  #add a compiler definition
+  add_definitions(-DMINGW)
+else()
+  compile_schemas(${SCHEMADIR} ${SCHEMADIR})
 endif()
 
-compile_schemas(${LOCAL_SCHEMADIR})
+#under windows point to a directory with specifique options and org files
+set(LOCAL_SCHEMADIR share/glib-2.0/schemas)
 
-## INSTALL
-# Install UI definitions files
-install(FILES ${SOURCE_SHARE}/${PROJECT_NAME}/ui.glade DESTINATION ${DATADIR})
+# INSTALL
+##Install settings
+###Compiled file
+install(
+  FILES ${SCHEMADIR}/gschemas.compiled
+  DESTINATION ${SCHEMADIR}
+  )
 
-# Install locales
-##Français
-install(FILES
+#The xml gschema not installed when creating an NSIS package because:
+#In a standalone application using an installer, we only need the app schema
+#Absolute install path are forbidden when creating a package
+if(NOT NSIS)
+###gschema.xml
+install(
+  FILES ${SCHEMADIR}/${PROJECT_NAME}.gschema.xml
+  DESTINATION ${GLIB_PREFIX}/${SCHEMADIR}
+  )
+endif()
+
+## Install UI definitions files
+install(
+  FILES
+  ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/${PROJECT_NAME}.glade
+  DESTINATION 
+  ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
+  )
+
+## Install locales
+###Français
+install(
+  FILES
   po/fr/${PROJECT_NAME}.mo
   DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
-# Install icons
+## Install icons
 install(
   FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
@@ -138,17 +178,17 @@ install(
   FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
-# Install desktop file
+## Install desktop file
 install(
   FILES com-gitub-gtk-sample-app.desktop
   DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 
-# Install programs 
+## Install programs 
 ## Set the output binary full path name variable
 set(OUTPUT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
 
 #if the current system is Windows, the generated binary ends with .exe
-if(${WIN32})
+if(MINGW)
   set(OUTPUT ${OUTPUT}.exe)
 endif()
 

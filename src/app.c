@@ -3,6 +3,7 @@
 void
 app_init (App * app)
 {
+  //init builder  
   GError *err = NULL;
     
   app->definitions = gtk_builder_new ();
@@ -12,7 +13,7 @@ app_init (App * app)
 
   gtk_builder_add_from_file (app->definitions,
                              definition_file, &err);
-    
+                             
   if (err != NULL) {
     g_printerr
       ("Error while loading UI definitions file: %s\n",
@@ -22,6 +23,15 @@ app_init (App * app)
   }
     
   gtk_builder_connect_signals (app->definitions, app);
+  
+  //init gsettings
+  GSettings * settings = g_settings_new ("sampleapp");
+  gboolean display_at_startup = g_settings_get_boolean(settings, "display-at-startup");
+  gchar *message = g_settings_get_string(settings, "message");
+  
+  if(display_at_startup){
+    g_printf(message);
+  }
 }
 
 #ifdef _WIN32

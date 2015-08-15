@@ -8,7 +8,7 @@
 
 #include "../config.h"
 
-#define UI_DEFINITION_FILE "ui.glade"
+#define UI_DEFINITION_FILE PROJECT_NAME".glade"
 
 /*
 Under Window the app can be installed in any directory with a graphical 
