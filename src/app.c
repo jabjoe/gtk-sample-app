@@ -30,7 +30,7 @@ app_init (App * app)
   gchar *message = g_settings_get_string(settings, "message");
   
   if(display_at_startup){
-    g_printf(message);
+    g_printf("Message: %s\n", message);
   }
 }
 
