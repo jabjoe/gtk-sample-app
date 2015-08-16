@@ -7,8 +7,11 @@ cmake_minimum_required(VERSION 2.6)
 #source directories
 set (SOURCE_SHARE "share")
 
-#install directories variables
+#include directories variables
 include(GNUInstallDirs)
+
+#include GSettings macro
+include(GSettings.cmake)
 
 ##directories where to find/install files.
 #These path are used in with the install instruction which only supports
@@ -20,11 +23,11 @@ set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 
 #These path are passed onto config.h.in to be used as preprocessor definitions
 if(MINGW)
-	set(SHARE_DIR "../share")
+  set(SHARE_DIR "../share")
   set(LOCALE_DIR ${SHARE_DIR}/${PROJECT_NAME}/locale)
 else(MINGW)
-	set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
-	set(LOCALE_DIR ${CMAKE_INSTALL_FULL_LOCALEDIR})
+  set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
+  set(LOCALE_DIR ${CMAKE_INSTALL_FULL_LOCALEDIR})
 endif(MINGW)
 
 #generate config.h from config.h.in
@@ -46,15 +49,6 @@ link_directories(${GTK3_LIBRARY_DIRS})
 #compiled binary output directory
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
-#set the pkg-config variable
-set(PKG_CONFIG_EXECUTABLE pkg-config)
-
-#find the glib prefix directory with pkg-config 
-execute_process (
-COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable prefix
-OUTPUT_VARIABLE GLIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
 #if we want to create a NSIS script
 if(NSIS)
   set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
@@ -70,9 +64,9 @@ if(NSIS)
   INSTALL(
     FILES
     ${GTK_BIN}/libatk-1.0-0.dll
-	${GTK_BIN}/libfontconfig-1.dll
-	${GTK_BIN}/libgdk-3-0.dll
-	${GTK_BIN}/liblzma-5.dll
+    ${GTK_BIN}/libfontconfig-1.dll
+    ${GTK_BIN}/libgdk-3-0.dll
+    ${GTK_BIN}/liblzma-5.dll
     ${GTK_BIN}/libcairo-2.dll
     ${GTK_BIN}/libcairo-gobject-2.dll
     ${GTK_BIN}/libffi-6.dll
@@ -121,39 +115,37 @@ target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 
-#Settings
-include(GSettings.cmake)
-if(MINGW)
-  #under windows point to a directory with specific options and org files
-  compile_schemas(${SCHEMADIR}/windows ${SCHEMADIR})
-  
-  #add a compiler definition
-  add_definitions(-DMINGW)
-else()
-  compile_schemas(${SCHEMADIR} ${SCHEMADIR})
-endif()
+#if using NSIS, compile the setting xml file in the source tree
+#if not using NSIS install and compile in the glib directory
+if(NSIS)
+  #Settings. Compile this software gschema localy
+  if(MINGW)
+    #under windows point to a directory with specific options and org files
+    compile_schemas(${SCHEMADIR}/windows ${SCHEMADIR})    
+  else()
+    compile_schemas(${SCHEMADIR} ${SCHEMADIR})
+  endif()
 
-#under windows point to a directory with specifique options and org files
-set(LOCAL_SCHEMADIR share/glib-2.0/schemas)
+  # INSTALL Compiled file in the software schema directory
+  install(
+    FILES ${SCHEMADIR}/gschemas.compiled
+    DESTINATION ${SCHEMADIR}
+    )
+else(NSIS)
+  # install the xml schema in glib gschema.xml
+  install(
+    FILES ${SCHEMADIR}/${PROJECT_NAME}.gschema.xml
+    DESTINATION ${GLIB_PREFIX}/${SCHEMADIR}
+    )
 
-# INSTALL
-##Install settings
-###Compiled file
-install(
-  FILES ${SCHEMADIR}/gschemas.compiled
-  DESTINATION ${SCHEMADIR}
-  )
+  #compile the glib schemas directory
+  install(
+    CODE
+    "message (STATUS \"Compiling GSettings schemas at ${GLIB_PREFIX}/${SCHEMADIR}\")"
+    )
 
-#The xml gschema not installed when creating an NSIS package because:
-#In a standalone application using an installer, we only need the app schema
-#Absolute install path are forbidden when creating a package
-if(NOT NSIS)
-###gschema.xml
-install(
-  FILES ${SCHEMADIR}/${PROJECT_NAME}.gschema.xml
-  DESTINATION ${GLIB_PREFIX}/${SCHEMADIR}
-  )
-endif()
+  compile_schemas_install(${GLIB_PREFIX}/${SCHEMADIR})
+endif(NSIS)
 
 ## Install UI definitions files
 install(
