@@ -2,6 +2,9 @@
 #define __APP__
     
 #include <gtk/gtk.h>
+#include <glib/gprintf.h>
+
+#include <string.h>
 
 #include <locale.h>
 #include <libintl.h>
@@ -31,7 +34,8 @@ Under Linux this is a simple string copy of the absolute path
 
 typedef struct app_
 {
-  GtkBuilder *definitions;    
+  GtkBuilder *definitions;
+  GSettings * settings;
 } App;
     
 void app_init (App * );

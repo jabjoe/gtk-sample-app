@@ -25,13 +25,19 @@ app_init (App * app)
   gtk_builder_connect_signals (app->definitions, app);
   
   //init gsettings
-  GSettings * settings = g_settings_new ("sampleapp");
-  gboolean display_at_startup = g_settings_get_boolean(settings, "display-at-startup");
-  gchar *message = g_settings_get_string(settings, "message");
-  
+  app->settings = g_settings_new ("sampleapp");
+  gboolean display_at_startup = g_settings_get_boolean(app->settings,
+                                                       "display-at-startup");
+  gchar *message = g_settings_get_string(app->settings, "message");
+
+  //print to standart output 
   if(display_at_startup){
     g_printf("Message: %s\n", message);
   }
+
+  //set the entry message text
+  GET_OBJECT (GtkWidget, entry_message);
+  gtk_entry_set_text(GTK_ENTRY(entry_message), message);
 }
 
 #ifdef _WIN32
