@@ -4,20 +4,17 @@ project(sampleapp C)
 # Set the minimum version of cmake required to build this project
 cmake_minimum_required(VERSION 2.6)
 
-#source directories
-set (SOURCE_SHARE "share")
-
 #include directories variables
 include(GNUInstallDirs)
 
 #include GSettings macro
 include(GSettings.cmake)
 
-##directories where to find/install files.
-#These path are used in with the install instruction which only supports
-#relative path
-set(SHAREDIR       ${CMAKE_INSTALL_DATADIR})
-set(LOCALDIR       ${CMAKE_INSTALL_LOCALEDIR})
+#Directories in the source tree
+set (SOURCE_SHARE "share")
+
+##directories where to install files.
+#These path must be relative
 set(GLIB_SCHEMADIR "glib-2.0/schemas")
 set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 
@@ -150,7 +147,7 @@ endif(NSIS)
 ## Install UI definitions files
 install(
   FILES
-  ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/${PROJECT_NAME}.glade
+  ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.glade
   DESTINATION 
   ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
   )
