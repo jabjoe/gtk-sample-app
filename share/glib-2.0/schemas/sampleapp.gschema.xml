@@ -2,10 +2,7 @@
 <schemalist>
   <schema id="sampleapp" path="/sampleapp/">
     <key name="message" type="s">
-      <default>'loaded from settings'</default>
-    </key>
-    <key name="display-at-startup" type="b">
-      <default>true</default>
+      <default>'value loaded from settings'</default>
     </key>
   </schema>
 </schemalist>

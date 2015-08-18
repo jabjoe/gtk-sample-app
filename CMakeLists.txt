@@ -55,9 +55,10 @@ if(NSIS)
 
   #install the Gtk DLLs from the Gtk's bin directory 
   set (GTK_BIN ${GLIB_PREFIX}/bin)
-  
+
   #these are all the required dll listed in the GTK documentation
   #see http://www.gtk.org/download/win32_contentlist.php
+  INSTALL(
   INSTALL(
     FILES
     ${GTK_BIN}/libatk-1.0-0.dll
@@ -82,10 +83,9 @@ if(NSIS)
     ${GTK_BIN}/libpangoft2-1.0-0.dll
     ${GTK_BIN}/libpangowin32-1.0-0.dll
     ${GTK_BIN}/libpixman-1-0.dll
-    ${GTK_BIN}/libpng15-15.dll
+    ${GTK_BIN}/libpng16-16.dll
     ${GTK_BIN}/libxml2-2.dll
-    ${GTK_BIN}/pthreadGC2.dll
-    ${GTK_BIN}/zlib1.dll 
+    ${GTK_BIN}/zlib1.dll
     DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif(NSIS)
 
@@ -116,14 +116,8 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 #if not using NSIS install and compile in the glib directory
 if(NSIS)
   #Settings. Compile this software gschema localy
-  if(MINGW)
-    #under windows point to a directory with specific options and org files
-    compile_schemas(${SCHEMADIR}/windows ${SCHEMADIR})    
-  else()
-    compile_schemas(${SCHEMADIR} ${SCHEMADIR})
-  endif()
+  compile_schemas(${SCHEMADIR}/NSIS ${SCHEMADIR})    
 
-  # INSTALL Compiled file in the software schema directory
   install(
     FILES ${SCHEMADIR}/gschemas.compiled
     DESTINATION ${SCHEMADIR}
@@ -169,16 +163,16 @@ install(
 
 ## Install desktop file
 install(
-  FILES com-gitub-gtk-sample-app.desktop
+  FILES ${PROJECT_NAME}.desktop
   DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 
 ## Install programs 
 ## Set the output binary full path name variable
-set(OUTPUT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
+set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
 
 #if the current system is Windows, the generated binary ends with .exe
 if(MINGW)
-  set(OUTPUT ${OUTPUT}.exe)
+  set(OUTPUT_BIN ${OUTPUT_BIN}.exe)
 endif()
 
-install(PROGRAMS ${OUTPUT} DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(PROGRAMS ${OUTPUT_BIN} DESTINATION ${CMAKE_INSTALL_BINDIR})

@@ -18,6 +18,6 @@ G_MODULE_EXPORT void on_button_save_clicked(GtkButton *button,
                                              App* app){
   GET_OBJECT(GtkWidget, entry_message);
   const gchar *message = gtk_entry_get_text(GTK_ENTRY(entry_message));
-  g_settings_set_string(app->settings, "message",
-                        message);
+  g_settings_set_string(app->settings, "message", message);
+  g_settings_sync();
 }
