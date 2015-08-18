@@ -22,10 +22,10 @@ set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 if(MINGW)
   set(SHARE_DIR "../share")
   set(LOCALE_DIR ${SHARE_DIR}/${PROJECT_NAME}/locale)
-else(MINGW)
+else()
   set(SHARE_DIR ${CMAKE_INSTALL_FULL_DATADIR})
   set(LOCALE_DIR ${CMAKE_INSTALL_FULL_LOCALEDIR})
-endif(MINGW)
+endif()
 
 #generate config.h from config.h.in
 configure_file(config.h.in config.h)
@@ -58,7 +58,6 @@ if(NSIS)
 
   #these are all the required dll listed in the GTK documentation
   #see http://www.gtk.org/download/win32_contentlist.php
-  INSTALL(
   INSTALL(
     FILES
     ${GTK_BIN}/libatk-1.0-0.dll
