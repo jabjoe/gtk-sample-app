@@ -31,7 +31,9 @@ endif()
 configure_file(config.h.in config.h)
 
 ############################################################
+#Options for Windows
 option(NSIS "Use NSIS generator to produce installer" OFF)
+option(STANDALONE "Install as standalone" OFF)
 
 # Use the package PkgConfig to detect GTK+ headers/library files
 find_package(PkgConfig REQUIRED)
@@ -47,12 +49,14 @@ link_directories(${GTK3_LIBRARY_DIRS})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
 #if we want to create a NSIS script
-if(NSIS)
-  set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
-  set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
-  set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
-  include (NSIS.cmake)
-
+if(NSIS OR STANDALONE)
+  if(NSIS)
+    set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
+    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
+    set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
+    include (NSIS.cmake)
+  endif()
+  
   #install the Gtk DLLs from the Gtk's bin directory 
   set (GTK_BIN ${GLIB_PREFIX}/bin)
 
@@ -86,7 +90,7 @@ if(NSIS)
     ${GTK_BIN}/libxml2-2.dll
     ${GTK_BIN}/zlib1.dll
     DESTINATION ${CMAKE_INSTALL_BINDIR})
-endif(NSIS)
+endif()
 
 # Custom target for packaging.
 if(MINGW)
