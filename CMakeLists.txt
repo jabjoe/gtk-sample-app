@@ -145,13 +145,23 @@ target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 
-#if using NSIS, compile the setting xml file in the source tree
-#if not using NSIS install and compile in the glib directory
-if(NSIS)
-  #compile gschema in source tree
-  compile_schemas(${SCHEMADIR}/NSIS ${SCHEMADIR})    
+#if using NSIS or STANDALONE, compile the setting xml file in the source tree
+#if not, install and compile in the system glib directory
+if(NSIS OR STANDALONE)
+  #compile gschema with required gtk settings in a temporary directory
+  #set the tmp directory name
+  set(TMP_SCHEMADIR $ENV{TMP}/${PROJECT_NAME})
+  #create tmp directory
+  file(MAKE_DIRECTORY ${TMP_SCHEMADIR})
+  #copy application schema and gtk schemas to the tmp directory
+  file(COPY ${SOURCE_SHARE}/${GLIB_SCHEMADIR}/${PROJECT_NAME}.gschema.xml
+	${GLIB_PREFIX}/${SCHEMADIR}/org.gtk.Settings.ColorChooser.gschema.xml
+	${GLIB_PREFIX}/${SCHEMADIR}/org.gtk.Settings.FileChooser.gschema.xml
+       DESTINATION ${TMP_SCHEMADIR})
+  #compile schemas in tmp directory, output in local schemadir
+  compile_schemas(${TMP_SCHEMADIR} ${SCHEMADIR})    
 
-  #install in directory relative to binary 
+  #install compiled gschema in a directory relative to the binary 
   install(
     FILES ${SCHEMADIR}/gschemas.compiled
     DESTINATION ${SCHEMADIR}
@@ -181,10 +191,10 @@ if(NSIS)
     DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/loaders/
     )
 
-else(NSIS)
+else()
   # install the xml schema in glib gschema.xml
   install(
-    FILES ${SCHEMADIR}/${PROJECT_NAME}.gschema.xml
+    FILES ${SOURCE_SHARE}/${GLIB_SCHEMADIR}/${PROJECT_NAME}.gschema.xml
     DESTINATION ${GLIB_PREFIX}/${SCHEMADIR}
     )
 
@@ -195,7 +205,7 @@ else(NSIS)
     )
 
   compile_schemas_install(${GLIB_PREFIX}/${SCHEMADIR})
-endif(NSIS)
+endif()
 
 ## Install UI definitions files
 install(
