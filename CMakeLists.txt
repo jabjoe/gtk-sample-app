@@ -145,7 +145,7 @@ target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 
-#if using NSIS or STANDALONE, compile the setting xml file in the source tree
+#if using NSIS or STANDALONE, compile the setting xml file in a tmp directory
 #if not, install and compile in the system glib directory
 if(NSIS OR STANDALONE)
   #compile gschema with required gtk settings in a temporary directory
