@@ -192,13 +192,13 @@ if(NSIS OR STANDALONE)
     )
 
 else()
-  # install the xml schema in glib gschema.xml
+  # at install, copy the software gschema.xml to the glib gschemas directory
   install(
     FILES ${SOURCE_SHARE}/${GLIB_SCHEMADIR}/${PROJECT_NAME}.gschema.xml
     DESTINATION ${GLIB_PREFIX}/${SCHEMADIR}
     )
 
-  #compile the glib schemas directory
+  #at install, compile glib gschemas directory
   install(
     CODE
     "message (STATUS \"Compiling GSettings schemas at ${GLIB_PREFIX}/${SCHEMADIR}\")"
