@@ -70,8 +70,7 @@ if(NSIS OR STANDALONE)
   #install the Gtk DLLs from the Gtk's bin directory 
   set (GTK_BIN ${GLIB_PREFIX}/bin)
 
-  #these are all the required dll listed in the GTK documentation
-  #see http://www.gtk.org/download/win32_contentlist.php
+  #these are all the required dll for GTK
   set (GTK_LIBS
     ${GTK_BIN}/libatk-1.0-0.dll
     ${GTK_BIN}/libfontconfig-1.dll
@@ -119,9 +118,12 @@ if(NSIS OR STANDALONE)
 
 endif()
 
-# Custom target for packaging.
+#Options for WINGW build
 if(MINGW)
+  # Add MINGW flag to use in source code
   add_definitions(-DMINGW)
+  #prevent prompt to open 
+  SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
 endif(MINGW)
 
 # Add other flags to the compiler
