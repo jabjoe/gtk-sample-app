@@ -14,7 +14,7 @@ include(GSettings.cmake)
 set (SOURCE_SHARE "share")
 
 ##directories where to install files.
-#These path must be relative
+#These paths must be relative
 set(GLIB_SCHEMADIR "glib-2.0/schemas")
 set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 
@@ -31,6 +31,16 @@ endif()
 configure_file(config.h.in config.h)
 
 ############################################################
+#set the Windows executable icon with windres and a rc file Windows
+set(RES_FILES "")
+if(MINGW)
+ set(RES_FILES "resources/icon.rc")
+ set(CMAKE_RC_COMPILER_INIT windres)
+ ENABLE_LANGUAGE(RC)
+ set(CMAKE_RC_COMPILE_OBJECT
+ "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+endif(MINGW)
+
 #Options for Windows
 option(NSIS "Use NSIS generator to produce installer" OFF)
 option(STANDALONE "Install as standalone" OFF)
@@ -123,7 +133,8 @@ add_executable(
   ${PROJECT_NAME}
   src/main.c
   src/app.c
-  src/callbacks.c 
+  src/callbacks.c
+  ${RES_FILES}
   )
 
 # Link the target to the GTK+ libraries
