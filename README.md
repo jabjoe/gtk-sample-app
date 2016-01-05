@@ -38,6 +38,19 @@ in a MinGW-W64 shell go to the gjitenkai directory and  do :
 
     cmake -DCMAKE_BUILD_TYPE=Release -DNSIS=ON . && cpack
 
+### GSettings schemas with standalone Windows applications 
+
+In a standard install .xml schemas files are copied in the system at share/glib-2.0/
+ and the gschemas.compiled is re-generated on the system with all the other software.
+
+In a standalone build, we do not need all other software schemas, because the gschemas.compiled
+file is relative to the exe (at bin/../share/glib-2.0/gschemas.compiled) except for the GTK settings org.gtk.Settings.ColorChooser.gschema.xml and org.gtk.Settings.FileChooser.gschema.xml).
+
+Unfortunatly glib-compile-schemas can only compile entires directory and not a selection of file.
+
+So when building a standalone exe, xml schemas of this software, org.gtk.Settings.ColorChooser.gschema.xml and org.gtk.Settings.FileChooser.gschema.xml are put in a separate directory to create a gschemas.compiled
+
+
 
 # Localization
 
