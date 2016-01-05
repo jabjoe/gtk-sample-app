@@ -148,13 +148,39 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 #if using NSIS, compile the setting xml file in the source tree
 #if not using NSIS install and compile in the glib directory
 if(NSIS)
-  #Settings. Compile this software gschema localy
+  #compile gschema in source tree
   compile_schemas(${SCHEMADIR}/NSIS ${SCHEMADIR})    
 
+  #install in directory relative to binary 
   install(
     FILES ${SCHEMADIR}/gschemas.compiled
     DESTINATION ${SCHEMADIR}
     )
+
+  #install icons
+  install(
+    DIRECTORY ${GLIB_PREFIX}/share/icons/Adwaita/scalable/
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/scalable
+    )
+
+  install(
+    FILES
+    ${GLIB_PREFIX}/share/icons/Adwaita/index.theme
+    ${GLIB_PREFIX}/share/icons/Adwaita/icon-theme.cache
+    DESTINATION
+    ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/
+    )
+
+  #pixbuf cache file and dll
+  install(
+    FILES share/loaders.cache
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/
+    )
+  install(
+    FILES ${GLIB_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/loaders/
+    )
+
 else(NSIS)
   # install the xml schema in glib gschema.xml
   install(
