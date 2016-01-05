@@ -26,7 +26,7 @@ MSYS2 with MinGW-W64 is the 'official' build method.
 
 pacman -S  mingw-w64-i686-toolchain mingw32/mingw-w64-i686-cmake mingw32/mingw-w64-i686-gtk3
 
-With a MinGW Shell go to the gjitenkai directory and do :
+With a MinGW Shell go to the gtk-sample-app directory and do :
 
     cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release . && mingw32-make.exe && mingw32-make.exe install
 
