@@ -1,25 +1,45 @@
-# GTK3 Sample app with
+# GTK3 Sample app using
 
 * CMake
 * GSettings
 * Localization
 * Glade UI file with common callbacks (quit/about)
 
-##Basic CMake usage
+# Build 
+## Under Linux
 
-Build and install
+<pre>
+--generate Makefile and config.h
+$cmake . 
+--generate binary
+$make
+--install files, settings and binaries
+#make install
+</pre>
 
-    cmake . && make && sudo make install
+## Under Windows 
 
-Build and install under MinGW
+MSYS2 with MinGW-W64 is the 'official' build method. 
 
-    cmake -G "MSYS Makefiles" . && make && make install
+* Get MSYS2 from http://msys2.github.io/
+* With MSYS2 shell Install MinGW toolchain (gcc, make) and dependencies (cmake and gtk3) 
 
-Create a Windows installer with NSIS
+pacman -S  mingw-w64-i686-toolchain mingw32/mingw-w64-i686-cmake mingw32/mingw-w64-i686-gtk3
 
-    cmake -DNSIS=ON -G "MSYS Makefiles" . && make package
+With a MinGW Shell go to the gjitenkai directory and do :
 
-## Localization
+    cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release . && mingw32-make.exe && mingw32-make.exe install
+
+### Create an installer 
+
+* Install NSIS from sourceforge
+
+in a MinGW-W64 shell go to the gjitenkai directory and  do :
+
+    cmake -DCMAKE_BUILD_TYPE=Release -DNSIS=ON . && cpack
+
+
+# Localization
 
 Scan for translatable text in a Glade file
 
