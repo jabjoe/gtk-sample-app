@@ -48,7 +48,17 @@ file is relative to the exe (at bin/../share/glib-2.0/gschemas.compiled) except 
 
 Unfortunatly glib-compile-schemas can only compile entires directory and not a selection of file.
 
-So when building a standalone exe, xml schemas of this software, org.gtk.Settings.ColorChooser.gschema.xml and org.gtk.Settings.FileChooser.gschema.xml are put in a separate directory to create a gschemas.compiled
+So when building a standalone exe, xml schemas sampleapp.gschema.xml, org.gtk.Settings.ColorChooser.gschema.xml and org.gtk.Settings.FileChooser.gschema.xml are put in a separate directory (share/glib-2.0/schemas/
+) to create a gschemas.compiled
+
+### Icons with standalone Windows applications 
+
+SVG icons of the default theme (adwaita) copyed to share/icons/Adwaita/scalable/*
+also share/icons/Adwaita/icon-theme.cache and share/icons/Adwaita/index.theme
+
+After several test, it appears that the following files are also required: 
+* lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
+* lib/gdk-pixbuf-2.0/2.10.0/loaders/loaders.cache The first line of this file also needs to be edited to "../lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll"
 
 
 
