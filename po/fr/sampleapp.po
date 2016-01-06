@@ -24,3 +24,9 @@ msgstr "_Fichier"
 #: data/ui.glade:46
 msgid "_Help"
 msgstr "_Aide"
+
+msgid "Save"
+msgstr "Sauvegarder"
+
+msgid "Load"
+msgstr "Charger"
