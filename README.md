@@ -75,6 +75,11 @@ After several test, it appears that the following files are also required:
 * lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
 * lib/gdk-pixbuf-2.0/2.10.0/loaders/loaders.cache The first line of this file also needs to be edited to "../lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll"
 
+### Windows XP missing dll
+Windows XP misses the dwmapi.dll file.
+
+A compatible version of this dll can be downloaded from http://src.repairdll.org/download/18825_dwmapi.dll 
+
 # Localization
 
 Scan for translatable text in a Glade file
