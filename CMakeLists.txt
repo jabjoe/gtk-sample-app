@@ -31,15 +31,6 @@ endif()
 configure_file(config.h.in config.h)
 
 ############################################################
-#set the Windows executable icon with windres and a rc file Windows
-set(RES_FILES "")
-if(MINGW)
- set(RES_FILES "resources/icon.rc")
- set(CMAKE_RC_COMPILER_INIT windres)
- ENABLE_LANGUAGE(RC)
- set(CMAKE_RC_COMPILE_OBJECT
- "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
-endif(MINGW)
 
 #Options for Windows
 option(NSIS "Use NSIS generator to produce installer" OFF)
@@ -124,6 +115,14 @@ if(MINGW)
   add_definitions(-DMINGW)
   #prevent prompt to open 
   SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
+
+  #set the Windows executable icon with windres and a rc file Windows
+  set(RES_FILES "")
+  set(RES_FILES "resources/icon.rc")
+  set(CMAKE_RC_COMPILER_INIT windres)
+  ENABLE_LANGUAGE(RC)
+  set(CMAKE_RC_COMPILE_OBJECT
+  "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
 endif(MINGW)
 
 # Add other flags to the compiler
@@ -239,7 +238,7 @@ install(
 ## Set the output binary full path name variable
 set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
 
-#if the current system is Windows, the generated binary ends with .exe
+#if the target system is Windows, the generated binary ends with .exe
 if(MINGW)
   set(OUTPUT_BIN ${OUTPUT_BIN}.exe)
 endif()
