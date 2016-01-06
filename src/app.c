@@ -36,7 +36,7 @@ app_init (App * app)
 
   g_signal_connect(app->settings, 
                    "changed", 
-                   settings_changed, 
+                   G_CALLBACK (settings_changed), 
                    NULL);
   
   //set the entry message text
