@@ -58,6 +58,7 @@ the next install will also be standalone. You can clean with sh ./utils/cmake_cl
 
 Gtk Application can find required files in at a relative location
 
+<pre>
 bin/gtkapplication.exe
 bin/*.dll
 share/loader.cache
@@ -65,6 +66,7 @@ share/glib-2.0/gschemas.compiled
 share/icons/Adwaita/scalable/*
 share/icons/Adwaita/icon-theme.cache
 share/icons/Adwaita/index.theme
+</pre>
 
 
 ### GSettings schemas with standalone Windows applications 
