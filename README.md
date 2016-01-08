@@ -58,6 +58,8 @@ the next install will also be standalone. You can clean with sh ./utils/cmake_cl
 
 Gtk Application can find required files in at a relative location
 
+The application final tree looks like this: 
+
 <pre>
 bin/gtkapplication.exe
 bin/*.dll
@@ -66,6 +68,8 @@ share/glib-2.0/gschemas.compiled
 share/icons/Adwaita/scalable/*
 share/icons/Adwaita/icon-theme.cache
 share/icons/Adwaita/index.theme
+lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
+lib/gdk-pixbuf-2.0/2.10.0/loaders/loaders.cache
 </pre>
 
 
@@ -83,8 +87,7 @@ So when building a standalone exe, xml schemas sampleapp.gschema.xml, org.gtk.Se
 
 ### Icons with standalone Windows applications 
 
-SVG icons of the default theme (adwaita) copyed to share/icons/Adwaita/scalable/*
-also share/icons/Adwaita/icon-theme.cache and share/icons/Adwaita/index.theme
+SVG icons of the default theme (adwaita) needs to be copyed to a share directory relative to the bin directory bin../share/icons/Adwaita/scalable/* also bin../share/icons/Adwaita/icon-theme.cache and bin../share/icons/Adwaita/index.theme
 
 After several test, it appears that the following files are also required: 
 * lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
