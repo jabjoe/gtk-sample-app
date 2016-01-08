@@ -54,6 +54,19 @@ the next install will also be standalone. You can clean with sh ./utils/cmake_cl
 
 * After using -DNSIS, a standalone install tree can be found in _CPack_Packages\win32\NSIS
 
+### Standalone directory tree
+
+Gtk Application can find required files in at a relative location
+
+bin/gtkapplication.exe
+bin/*.dll
+share/loader.cache
+share/glib-2.0/gschemas.compiled
+share/icons/Adwaita/scalable/*
+share/icons/Adwaita/icon-theme.cache
+share/icons/Adwaita/index.theme
+
+
 ### GSettings schemas with standalone Windows applications 
 
 In a standard install .xml schemas files are copied in the system at share/glib-2.0/
