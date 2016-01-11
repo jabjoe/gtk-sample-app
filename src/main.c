@@ -5,10 +5,9 @@ int main( int argc, char **argv )
   gchar localdir[PATH_MAX] = {0};
   GET_FILE(LOCALE_DIR, localdir);
   
-  //the system locale data base.
+  //init internationalization
+  setlocale(LC_MESSAGES, "");
   bindtextdomain(PROJECT_NAME, localdir);
- 
-  //Set the current default message catalog to DOMAINNAME.
   textdomain(PROJECT_NAME);
 
   //new application 
