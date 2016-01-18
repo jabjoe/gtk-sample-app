@@ -40,7 +40,6 @@ else()
     )
 
   compile_schemas_install(${GLIB_PREFIX}/${SCHEMADIR})
-  
 endif()
 
 #generate config.h from config.h.in

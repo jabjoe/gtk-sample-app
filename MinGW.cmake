@@ -1,6 +1,6 @@
-#Options for Windows
 option(NSIS "Use NSIS generator to produce installer" OFF)
 option(STANDALONE "Install as standalone" OFF)
+option(ICONS "Install GTK icons" ON)
 
 #NSIS packages are standalone
 if(NSIS)
@@ -24,7 +24,6 @@ set(CMAKE_RC_COMPILE_OBJECT
 
 set(OUTPUT_BIN ${OUTPUT_BIN}.exe)
 
-#if we want to create a NSIS script
 if(STANDALONE)
   if(NSIS)
     set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME}.exe)
@@ -101,27 +100,29 @@ if(STANDALONE)
     DESTINATION ${SCHEMADIR}
     )
 
-  #install icons
-  install(
-    DIRECTORY ${GLIB_PREFIX}/share/icons/Adwaita/scalable/
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/scalable
-    )
+  if(ICONS)
+    #install icons
+    install(
+      DIRECTORY ${GLIB_PREFIX}/share/icons/Adwaita/scalable/
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/scalable
+      )
 
-  install(
-    FILES
-    ${GLIB_PREFIX}/share/icons/Adwaita/index.theme
-    ${GLIB_PREFIX}/share/icons/Adwaita/icon-theme.cache
-    DESTINATION
-    ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/
-    )
+    install(
+      FILES
+      ${GLIB_PREFIX}/share/icons/Adwaita/index.theme
+      ${GLIB_PREFIX}/share/icons/Adwaita/icon-theme.cache
+      DESTINATION
+      ${CMAKE_INSTALL_DATADIR}/icons/Adwaita/
+      )
 
-  #pixbuf cache file and dll
-  install(
-    FILES share/loaders.cache
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/
-    )
-  install(
-    FILES ${GLIB_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/loaders/
-    )
-endif()
+    #pixbuf cache file and dll
+    install(
+      FILES share/loaders.cache
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/
+      )
+    install(
+      FILES ${GLIB_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/loaders/
+      )
+  endif(ICONS)
+endif(STANDALONE)
