@@ -1,6 +1,15 @@
 # Set the name and the supported language of the project
 project(sampleapp C)
 
+# files needed to compile the executable
+add_executable(
+  ${PROJECT_NAME}
+  src/main.c
+  src/app.c
+  src/callbacks.c
+  ${RES_FILES}
+  )
+
 # Set the minimum version of cmake required to build this project
 cmake_minimum_required(VERSION 2.6)
 
@@ -19,6 +28,12 @@ set(GLIB_SCHEMADIR "glib-2.0/schemas")
 set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 
 set(RES_FILES "")
+
+#compiled binary output directory
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+
+## Set the output binary full path name variable
+set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
 
 #These path are passed onto config.h.in to be used as preprocessor definitions
 if(MINGW)
@@ -45,8 +60,6 @@ endif()
 #generate config.h from config.h.in
 configure_file(config.h.in config.h)
 
-############################################################
-
 # Use the package PkgConfig to detect GTK+ headers/library files
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
@@ -57,24 +70,12 @@ include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
 ############################################################
 
-#compiled binary output directory
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
-
 # Add other flags to the compiler
 add_definitions(${GTK3_CFLAGS_OTHER})
 add_definitions(-Wall)
 
-# files needed to compile the executable
-add_executable(
-  ${PROJECT_NAME}
-  src/main.c
-  src/app.c
-  src/callbacks.c
-  ${RES_FILES}
-  )
-
 # Link the target to the GTK+ libraries
-target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES} -lz)
 
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
@@ -83,7 +84,7 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 install(
   FILES
   ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.glade
-  DESTINATION 
+  DESTINATION
   ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
   )
 
@@ -91,24 +92,17 @@ install(
 ###Français
 install(
   FILES
-  po/fr/${PROJECT_NAME}.mo
-  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
+  po/fr/${PROJECT_NAME}.mo  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
-## Install icons
+## Install icon
 install(
   FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
-install(
-  FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 ## Install desktop file
 install(
   FILES ${PROJECT_NAME}.desktop
   DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 
-## Install programs 
-## Set the output binary full path name variable
-set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
-
+## Install programs
 install(PROGRAMS ${OUTPUT_BIN} DESTINATION ${CMAKE_INSTALL_BINDIR})
