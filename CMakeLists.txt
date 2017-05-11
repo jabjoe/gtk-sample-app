@@ -30,7 +30,7 @@ set(SCHEMADIR      ${CMAKE_INSTALL_DATADIR}/${GLIB_SCHEMADIR})
 set(RES_FILES "")
 
 #compiled binary output directory
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 ## Set the output binary full path name variable
 set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
@@ -83,9 +83,9 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 ## Install UI definitions files
 install(
   FILES
-  ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.glade
+  ${SOURCE_SHARE}/${PROJECT_NAME}/ui/${PROJECT_NAME}.ui
   DESTINATION
-  ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
+  ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/ui/
   )
 
 ## Install locales
