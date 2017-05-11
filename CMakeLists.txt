@@ -1,15 +1,6 @@
 # Set the name and the supported language of the project
 project(sampleapp C)
 
-# files needed to compile the executable
-add_executable(
-  ${PROJECT_NAME}
-  src/main.c
-  src/app.c
-  src/callbacks.c
-  ${RES_FILES}
-  )
-
 # Set the minimum version of cmake required to build this project
 cmake_minimum_required(VERSION 2.6)
 
@@ -31,6 +22,9 @@ set(RES_FILES "")
 
 #compiled binary output directory
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+#Make the binary directory
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 ## Set the output binary full path name variable
 set(OUTPUT_BIN ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME})
@@ -58,24 +52,35 @@ else()
 endif()
 
 #generate config.h from config.h.in
-configure_file(config.h.in config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)
 
 # Use the package PkgConfig to detect GTK+ headers/library files
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(LIBSOUP REQUIRED libsoup-2.4)
+
 
 # Setup CMake to use GTK+, tell the compiler where to look for headers
 # and to the linker where to look for libraries
-include_directories(${GTK3_INCLUDE_DIRS})
-link_directories(${GTK3_LIBRARY_DIRS})
+include_directories(${GTK3_INCLUDE_DIRS} ${LIBSOUP_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS} ${LIBSOUP_LIBRARY_DIRS})
 ############################################################
 
 # Add other flags to the compiler
 add_definitions(${GTK3_CFLAGS_OTHER})
 add_definitions(-Wall)
 
+# files needed to compile the executable
+add_executable(
+  ${PROJECT_NAME}
+  src/main.c
+  src/app.c
+  src/callbacks.c
+  ${RES_FILES}   #resouces file for icon
+  )
+
 # Link the target to the GTK+ libraries
-target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES} -lz)
+target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES} ${LIBSOUP_LIBRARIES} -lz)
 
 # Compiler flag needed to reach callback functions
 set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
@@ -92,12 +97,13 @@ install(
 ###Français
 install(
   FILES
-  po/fr/${PROJECT_NAME}.mo  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
+  po/fr/${PROJECT_NAME}.mo
+  DESTINATION ${CMAKE_INSTALL_LOCALEDIR}/fr/LC_MESSAGES/)
 
 ## Install icon
 install(
   FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 ## Install desktop file
 install(
