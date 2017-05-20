@@ -3,8 +3,12 @@
 int main( int argc, char **argv )
 {
   //internationalization
-  setlocale(LC_MESSAGES, "");
-  bindtextdomain(PROJECT_NAME, LOCALE_DIR);
+  const gchar * const * dirs = g_get_system_data_dirs();
+  gchar *rest = g_strjoin(G_DIR_SEPARATOR_S, "locale", NULL);
+  const gchar* localdir = get_file(dirs, rest);
+  g_free(rest);
+
+  bindtextdomain(PROJECT_NAME, localdir);
   textdomain(PROJECT_NAME);
 
   //new application
