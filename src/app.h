@@ -10,7 +10,7 @@
 #include <locale.h>
 #include <libintl.h>
 
-#include "../config.h"
+#include "config.h"
 
 #define UI_DEFINITION_FILE PROJECT_NAME".ui"
 
