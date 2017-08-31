@@ -63,25 +63,3 @@ const gchar* get_file(const gchar* const *dirs, const gchar* rest){
   }
   return NULL;
 }
-
-
-#ifdef _WIN32
-void path_relative(gchar *path, gchar *res){
-  //get the .exe full path and filename
-  gchar buffer[PATH_MAX];
-  GetModuleFileName(NULL, buffer, PATH_MAX) ;
-
-  //get only the directory path (without filename.exe)
-  gchar *dirname = g_path_get_dirname(buffer);
-
-  //copy to the result varable
-  g_strlcat(res, dirname, PATH_MAX);
-
-  //free now unneeded variable
-  g_free(dirname);
-
-  //append the path to the result
-  g_strlcat(res, "\\", PATH_MAX);
-  g_strlcat(res, path, PATH_MAX);
-}
-#endif
