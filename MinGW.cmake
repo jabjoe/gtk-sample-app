@@ -126,12 +126,9 @@ if(STANDALONE)
 
     #pixbuf cache file and dll
     install(
-      FILES share/loaders.cache
-      DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/
-      )
-    install(
-      FILES ${GLIB_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll
-      DESTINATION ${CMAKE_INSTALL_DATADIR}/../lib/gdk-pixbuf-2.0/2.10.0/loaders/
+      DIRECTORY ${GLIB_PREFIX}/lib/gdk-pixbuf-2.0
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
       )
   endif(ICONS)
+
 endif(STANDALONE)
