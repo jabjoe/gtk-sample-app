@@ -5,6 +5,28 @@
 * Localization
 * Glade UI file with common callbacks (quit/about)
 
+# Make your own GTK application
+
+* Clone or Download this repository
+* Name your application
+
+ The name of this template is 'sampleapp', you will need to rename a few files and directories by the name you want to give
+ to your application.
+
+ * Files ares:
+     * second line of CMakeLists.txt
+	 * sampleapp files in po/
+	 * sampleapp folder at root of this repository
+	 * sampleapp/ui/sampleapp.ui and sampleapp/sampleapp.png
+	 * sampleapp/desktop and it's content
+
+There is a shell script "rename_app" in utils that do this work for you.
+Use it at the root of the repository with your applicatio name as parameter (no space or special chars)
+
+e.g
+ sh utils/rename_app.sh MyApplication
+
+ you are now ready to build
 
 # Build (linux)
 
