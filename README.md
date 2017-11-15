@@ -1,9 +1,17 @@
-# GTK3 Sample app using
+# GTK3 Sample app
 
+Using:
+
+* C with GTK3
 * CMake
 * GSettings
 * Localization
 * Glade UI file with common callbacks (quit/about)
+* NSIS packager (Windows)
+
+# What this application do
+
+This application load and save a text in gschema.
 
 # Make your own GTK application
 
