@@ -5,6 +5,7 @@ mv po/$PROJECT_NAME.pot po/$NEW_PROJECT_NAME.pot
 mv po/fr/$PROJECT_NAME.po po/fr/$NEW_PROJECT_NAME.po
 mv po/fr/$PROJECT_NAME.mo po/fr/$NEW_PROJECT_NAME.mo
 mv share/glib-2.0/schemas/$PROJECT_NAME.gschema.xml share/glib-2.0/schemas/$NEW_PROJECT_NAME.gschema.xml
+mv $PROJECT_NAME.desktop $NEW_PROJECT_NAME.desktop
 mv $PROJECT_NAME/$PROJECT_NAME.png $PROJECT_NAME/$NEW_PROJECT_NAME.png
 mv $PROJECT_NAME/ui/$PROJECT_NAME.ui $PROJECT_NAME/ui/$NEW_PROJECT_NAME.ui
 mv $PROJECT_NAME $NEW_PROJECT_NAME
