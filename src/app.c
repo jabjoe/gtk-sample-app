@@ -3,14 +3,11 @@
 
 static void settings_changed(GSettings *settings,
                                gchar *key,
-                               gpointer user_data)
-{
+                               gpointer user_data){
+
 }
 
-void
-app_init (App * app)
-{
-  //init builder
+void app_init (App * app){
   GError *err = NULL;
 
   app->definitions = gtk_builder_new ();
@@ -22,12 +19,13 @@ app_init (App * app)
 			  "ui",
 			  UI_DEFINITION_FILE,
 			  NULL);
-  const gchar* definition_file = get_file(dirs, rest);
+  gchar* definition_file = get_file(dirs, rest);
   g_free(rest);
 
   gtk_builder_add_from_file (app->definitions,
                              definition_file, &err);
 
+  if(!definition_file)g_printerr("Cannot find UI definition file '%s'\n", definition_file);
   if (err != NULL) {
     g_printerr
       ("Error while loading UI definitions file: %s\n",
@@ -37,6 +35,8 @@ app_init (App * app)
   }
 
   gtk_builder_connect_signals (app->definitions, app);
+
+  g_free(definition_file);
 
   //init gsettings
   app->settings = g_settings_new ("sampleapp");
@@ -53,10 +53,10 @@ app_init (App * app)
 
 }
 
-const gchar* get_file(const gchar* const *dirs, const gchar* rest){
-  gint i;
-  const gchar* res = NULL;
-  for (i = 0; dirs[i]; i++){
+gchar* get_file(const gchar* const *dirs, const gchar* rest){
+  if(g_file_test(rest, G_FILE_TEST_EXISTS))return g_strdup(rest);
+  gchar* res = NULL;
+  for (gint i = 0; dirs[i]; i++){
     res = g_strjoin (G_DIR_SEPARATOR_S, dirs[i], rest, NULL);
     if(g_file_test(res, G_FILE_TEST_EXISTS))return res;
     else g_free(res);

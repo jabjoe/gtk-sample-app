@@ -25,6 +25,6 @@ typedef struct app_
 
 void app_init (App * );
 
-const gchar* get_file(const gchar* const *dirs, const gchar* rest);
+gchar* get_file(const gchar* const *dirs, const gchar* rest);
 
 #endif

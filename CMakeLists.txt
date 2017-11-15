@@ -86,7 +86,7 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 ## Install UI definitions files
 install(
   FILES
-  ${SOURCE_SHARE}/${PROJECT_NAME}/ui/${PROJECT_NAME}.ui
+  ${PROJECT_NAME}/ui/${PROJECT_NAME}.ui
   DESTINATION
   ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/ui/
   )
@@ -100,7 +100,7 @@ install(
 
 ## Install icon
 install(
-  FILES ${SOURCE_SHARE}/${PROJECT_NAME}/${PROJECT_NAME}.png
+  FILES ${PROJECT_NAME}/${PROJECT_NAME}.png
   DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 ## Install desktop file
