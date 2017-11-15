@@ -19,6 +19,7 @@
 	 * sampleapp folder at root of this repository
 	 * sampleapp/ui/sampleapp.ui and sampleapp/sampleapp.png
 	 * sampleapp/desktop and it's content
+	 * share/share/glib-2.0/schemas/sampleapp.xml
 
 There is a shell script "rename_app" in utils that do this work for you.
 Use it at the root of the repository with your applicatio name as parameter (no space or special chars)
