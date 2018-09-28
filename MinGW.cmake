@@ -81,6 +81,9 @@ if(STANDALONE)
 
   set(RUNTIME_LIBS
     ${MINGW_BIN}/${LIB_GCC}
+    ${MINGW_BIN}/libpcre-1.dll
+    ${MINGW_BIN}/libgraphite2.dll
+    ${MINGW_BIN}/libfribidi-0.dll
     ${MINGW_BIN}/libwinpthread-1.dll
     ${MINGW_BIN}/libbz2-1.dll
     ${MINGW_BIN}/libepoxy-0.dll

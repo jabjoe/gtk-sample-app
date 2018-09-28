@@ -7,9 +7,11 @@ MSYS2 with MinGW-W64 is the 'official' build method.
 
 pacman -S  mingw-w64-i686-toolchain mingw32/mingw-w64-i686-cmake mingw32/mingw-w64-i686-gtk3
 
+(Restart msys2 to ensure you are using the new environment variables settings)
+
 With a MinGW Shell go to the gtk-sample-app directory and do :
 
-    cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release . && mingw32-make.exe && mingw32-make.exe install
+    cmake.exe -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release . && mingw32-make.exe && mingw32-make.exe install
 
 ## Create an installer
 
@@ -17,7 +19,7 @@ With a MinGW Shell go to the gtk-sample-app directory and do :
 
 in a MinGW-W64 shell go to the gjitenkai directory and  do :
 
-    cmake -DCMAKE_BUILD_TYPE=Release -DNSIS=ON . && cpack
+    cmake.exe -DCMAKE_BUILD_TYPE=Release -DNSIS=ON . && cpack.exe
 
 ## Create a Standalone directory
 
@@ -26,7 +28,7 @@ Will install all required files (dll, icons) in the install directory
 The resulting install directory is the same after an install with the NSIS installer,
 except no installer is build and used.
 
-    cmake -DCMAKE_BUILD_TYPE=Release -DSTANDALONE=ON . && mingw32-make install
+    cmake.exe -DCMAKE_BUILD_TYPE=Release -DSTANDALONE=ON . && mingw32-make.exe install
 
 
 Please note that:
